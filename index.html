@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050814" />
+  <title>شاليها بورتوفيق</title>
+
+  <!-- خط رقعة (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="app" id="app">
+    <!-- Top Nav -->
+    <header class="topbar" aria-label="القائمة العلوية">
+      <nav class="nav" aria-label="التنقل">
+        <button class="nav-btn is-active" data-target="home" type="button">الرئيسية</button>
+        <button class="nav-btn" data-target="prices" type="button">الأسعار</button>
+        <button class="nav-btn" data-target="stay" type="button">تفاصيل الإقامة</button>
+        <button class="nav-btn" data-target="booking" type="button">التوافر والحجز</button>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- HOME (video background only here) -->
+      <section class="screen is-visible" id="home" aria-label="الرئيسية">
+        <div class="hero">
+          <video
+            class="hero-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+          >
+            <source src="bck1.mp4" type="video/mp4" />
+          </video>
+
+          <div class="hero-overlay" aria-hidden="true"></div>
+
+          <div class="hero-center" role="img" aria-label="شاليها بورتوفيق">
+            <!-- Glass + draw animation -->
+            <div class="glass-title">
+              <svg class="draw-title" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                <!-- stroke outline -->
+                <text x="50%" y="58%" text-anchor="middle" class="t-stroke">شاليها بورتوفيق</text>
+                <!-- fill text -->
+                <text x="50%" y="58%" text-anchor="middle" class="t-fill">شاليها بورتوفيق</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Bottom logo -->
+          <div class="hero-footer" aria-label="شعار">
+            <img class="brand" src="seuz.png" alt="seuz" />
+          </div>
+        </div>
+      </section>
+
+      <!-- PRICES -->
+      <section class="screen" id="prices" aria-label="الأسعار">
+        <div class="panel">
+          <h2 class="panel-title">الأسعار</h2>
+          <div class="panel-body placeholder">
+            <!-- هيتحط هنا صور وتفاصيل بعدين -->
+          </div>
+        </div>
+      </section>
+
+      <!-- STAY DETAILS -->
+      <section class="screen" id="stay" aria-label="تفاصيل الإقامة">
+        <div class="panel">
+          <h2 class="panel-title">تفاصيل الإقامة</h2>
+          <div class="panel-body placeholder">
+            <!-- هيتحط هنا صور وتفاصيل بعدين -->
+          </div>
+        </div>
+      </section>
+
+      <!-- AVAILABILITY & BOOKING -->
+      <section class="screen" id="booking" aria-label="التوافر والحجز">
+        <div class="panel">
+          <h2 class="panel-title">التوافر والحجز</h2>
+          <div class="panel-body placeholder">
+            <!-- هيتحط هنا صور وتفاصيل بعدين -->
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
