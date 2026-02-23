@@ -1,11 +1,11 @@
 :root{
-  --bg:#efe7d7;        /* بيج رملي */
-  --cream:#f7f1e6;     /* كريمي */
+  --bg:#efe7d7;
+  --cream:#f7f1e6;
   --sand:#e7dccb;
-  --softBlue:#b9d3dc;  /* أزرق فاتح */
-  --navy:#2b3a4a;      /* كحلي فاتح */
-  --brown:#6a4a34;     /* بني دافي */
-  --gold:#c6a15a;      /* ذهبي */
+  --softBlue:#b9d3dc;
+  --navy:#2b3a4a;
+  --brown:#6a4a34;
+  --gold:#c6a15a;
   --gold2:#b38d45;
 
   --safeT: env(safe-area-inset-top);
@@ -23,30 +23,24 @@ body{
   -webkit-tap-highlight-color: transparent;
 }
 
-/* خلفية “قماش/كتان” + موجات عضوية (بدون فراغات) */
+/* Beige linen + organic waves (fills everything, no gaps) */
 .bg{
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events:none;
-
   background:
-    radial-gradient(800px 360px at 15% 18%, rgba(185,211,220,.55), transparent 60%),
-    radial-gradient(700px 340px at 85% 28%, rgba(185,211,220,.45), transparent 60%),
-    radial-gradient(900px 420px at 50% 85%, rgba(231,220,203,.55), transparent 62%),
-
-    /* waves */
-    radial-gradient(1000px 180px at 35% 35%, rgba(255,255,255,.45), transparent 70%),
-    radial-gradient(1000px 180px at 65% 45%, rgba(255,255,255,.35), transparent 70%),
-
-    /* linen texture */
-    repeating-linear-gradient(0deg, rgba(0,0,0,.02) 0 1px, transparent 1px 6px),
-    repeating-linear-gradient(90deg, rgba(0,0,0,.015) 0 1px, transparent 1px 7px),
-
+    radial-gradient(900px 420px at 18% 18%, rgba(185,211,220,.55), transparent 62%),
+    radial-gradient(760px 380px at 84% 26%, rgba(185,211,220,.45), transparent 62%),
+    radial-gradient(900px 420px at 50% 86%, rgba(231,220,203,.55), transparent 65%),
+    radial-gradient(1200px 220px at 50% 36%, rgba(255,255,255,.42), transparent 70%),
+    radial-gradient(1200px 220px at 50% 48%, rgba(255,255,255,.30), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.018) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.014) 0 1px, transparent 1px 7px),
     linear-gradient(180deg, var(--bg), var(--cream));
 }
 
-/* Dust particles canvas */
+/* Dust */
 #dust{
   position: fixed;
   inset: 0;
@@ -54,10 +48,10 @@ body{
   width:100%;
   height:100%;
   pointer-events:none;
-  opacity: .35;
+  opacity: .33;
 }
 
-/* ===== Header ===== */
+/* Header */
 .header{
   position: sticky;
   top: 0;
@@ -67,7 +61,7 @@ body{
   padding-right: calc(var(--safeR) + 14px);
   padding-bottom: 10px;
 
-  background: rgba(239,231,215,.68);
+  background: rgba(239,231,215,.72);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(43,58,74,.10);
@@ -82,43 +76,10 @@ body{
   gap: 10px;
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap: 10px;
-  min-width: 0;
-}
-
-.brandStamp{
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-  object-fit: cover;
-  border: 2px solid rgba(198,161,90,.35);
-  background: rgba(255,255,255,.55);
-  box-shadow: 0 12px 26px rgba(0,0,0,.10);
-}
-
-.brandText{
-  line-height: 1.05;
-  color: var(--brown);
-  font-weight: 900;
-  font-size: 15px;
-  letter-spacing: .2px;
-  transform: rotate(-1deg);
-  text-shadow: 0 1px 0 rgba(255,255,255,.55);
-}
-
-.headerRight{
-  display:flex;
-  align-items:center;
-  gap: 10px;
-}
-
 .iconBtn{
   width: 44px;
   height: 44px;
-  border-radius: 16px;
+  border-radius: 18px;
   border: 1px solid rgba(43,58,74,.10);
   background: rgba(255,255,255,.55);
   display:grid;
@@ -145,7 +106,32 @@ body{
 .bookIc{ width: 20px; height: 20px; display:grid; place-items:center; color: var(--gold2); }
 .bookIc svg{ width: 20px; height: 20px; }
 
-/* ===== Drawer ===== */
+.brand{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+.brandText{
+  text-align:left;
+  font-family: "Aref Ruqaa", serif;
+  color: var(--brown);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.05;
+  transform: rotate(-1deg);
+  text-shadow: 0 1px 0 rgba(255,255,255,.6);
+}
+.brandStamp{
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid rgba(198,161,90,.35);
+  background: rgba(255,255,255,.55);
+  box-shadow: 0 12px 26px rgba(0,0,0,.10);
+}
+
+/* Drawer */
 .drawerOverlay{
   position: fixed;
   inset: 0;
@@ -190,7 +176,7 @@ body{
   color: var(--navy);
   font-weight: 900;
   padding: 12px 12px;
-  border-radius: 18px;
+  border-radius: 20px;
   border: 1px solid rgba(43,58,74,.10);
   background: rgba(255,255,255,.55);
 }
@@ -200,7 +186,7 @@ body{
   font-size: 13px;
 }
 
-/* ===== Page ===== */
+/* Page */
 .page{
   position: relative;
   z-index: 10;
@@ -209,28 +195,21 @@ body{
   padding: 14px 14px calc(120px + var(--safeB));
 }
 
-/* ===== Hero (wave mask) ===== */
-.hero{
+/* HERO (wave-shaped mask, no white card) */
+.hero{ padding-top: 10px; }
+.heroWave{
   position: relative;
-  border-radius: 28px;
+  height: 330px;
+  filter: drop-shadow(0 22px 55px rgba(0,0,0,.14));
+  border-radius: 36px;
   overflow: hidden;
-  box-shadow: 0 24px 70px rgba(0,0,0,.14);
-  border: 1px solid rgba(43,58,74,.10);
-  background: rgba(255,255,255,.40);
-}
 
-/* موجة عضوية: بالـ mask-image (شغالة كويس على iOS) */
-.heroMask{
-  position: relative;
-  height: 320px;
-  background: rgba(0,0,0,.06);
-
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 600'><path d='M0,120 C170,40 330,40 500,120 C670,200 830,200 1000,120 L1000,520 C820,560 650,600 500,580 C350,560 180,520 0,560 Z' fill='black'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 600'><path d='M0,110 C170,40 330,40 500,110 C670,180 830,180 1000,110 L1000,0 L1000,520 C820,560 650,600 500,580 C350,560 180,520 0,560 Z' fill='black'/></svg>");
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
   -webkit-mask-position: center;
 
-  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 600'><path d='M0,120 C170,40 330,40 500,120 C670,200 830,200 1000,120 L1000,520 C820,560 650,600 500,580 C350,560 180,520 0,560 Z' fill='black'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 600'><path d='M0,110 C170,40 330,40 500,110 C670,180 830,180 1000,110 L1000,0 L1000,520 C820,560 650,600 500,580 C350,560 180,520 0,560 Z' fill='black'/></svg>");
   mask-repeat: no-repeat;
   mask-size: 100% 100%;
   mask-position: center;
@@ -244,22 +223,21 @@ body{
   object-fit: cover;
   transform: scale(1.02);
 }
-
 .heroShade{
   position:absolute;
   inset:0;
-  background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.10) 45%, rgba(0,0,0,.40));
+  background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.10) 40%, rgba(0,0,0,.42));
 }
 
 .heroText{
   position:absolute;
-  inset: 0;
+  inset:0;
   display:flex;
   flex-direction:column;
-  align-items:center;
+  align-items:flex-end;
   justify-content:center;
-  text-align:center;
-  padding: 18px 14px;
+  text-align:right;
+  padding: 20px 18px;
   color: rgba(255,255,255,.92);
 }
 
@@ -267,25 +245,25 @@ body{
   margin: 0;
   font-family: "Noto Naskh Arabic", serif;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 30px;
   text-shadow: 0 14px 28px rgba(0,0,0,.26);
 }
 .sub{
-  margin: 8px 0 14px;
+  margin: 10px 0 14px;
   font-family: "Noto Naskh Arabic", serif;
   font-size: 16px;
-  opacity: .92;
+  opacity: .94;
   text-shadow: 0 14px 28px rgba(0,0,0,.24);
 }
 
-/* زر خشبي عضوي */
+/* Wood CTA (closer to reference) */
 .woodBtn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
   padding: 12px 18px;
   border-radius: 999px;
-  color: rgba(255,255,255,.92);
+  color: rgba(255,255,255,.95);
   text-decoration:none;
   font-weight: 900;
 
@@ -295,62 +273,80 @@ body{
 
   border: 1px solid rgba(255,255,255,.22);
   box-shadow: 0 22px 55px rgba(0,0,0,.25);
-
-  /* edges عضوية */
-  clip-path: path("M 0 20 C 20 0 60 0 90 12 C 120 24 160 24 190 10 C 220 -4 260 0 280 16 C 300 32 340 34 360 18 C 380 2 420 2 440 20 L 440 60 C 420 82 380 82 360 70 C 340 58 300 58 280 74 C 260 90 220 94 190 78 C 160 62 120 62 90 80 C 60 98 20 96 0 74 Z");
 }
 
-/* ===== Sections ===== */
-.section{ padding: 18px 0 6px; }
+/* Sections */
+.section{ padding: 20px 0 8px; }
 .secTitle{
   margin: 0 0 12px;
   text-align:center;
   font-family: "Noto Naskh Arabic", serif;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 26px;
   color: var(--brown);
 }
 
-/* ===== Chalet cards (fluid) ===== */
-.chaletList{ display:flex; flex-direction:column; gap: 14px; }
+/* Paper container behind chalets (like the reference) */
+.paper{
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(43,58,74,.10);
+  box-shadow: 0 20px 55px rgba(0,0,0,.10);
+  padding: 14px;
+  border-radius: 40px 28px 44px 30px / 36px 30px 46px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.paper::before{
+  content:"";
+  position:absolute;
+  inset:-40% -20%;
+  background:
+    radial-gradient(700px 220px at 20% 40%, rgba(185,211,220,.22), transparent 62%),
+    radial-gradient(700px 220px at 80% 55%, rgba(185,211,220,.18), transparent 62%);
+  pointer-events:none;
+}
 
-.chaletCard{
+/* Fluid chalet cards */
+.fluidCard{
+  position: relative;
   display:grid;
-  grid-template-columns: 130px 1fr;
+  grid-template-columns: 140px 1fr;
   gap: 12px;
   align-items:center;
 
   padding: 12px;
-  background: rgba(255,255,255,.55);
+  background: rgba(247,241,230,.68);
   border: 1px solid rgba(43,58,74,.10);
-  box-shadow: 0 20px 55px rgba(0,0,0,.10);
+  box-shadow: 0 16px 40px rgba(0,0,0,.08);
+  border-radius: 44px 26px 52px 30px / 34px 30px 56px 26px;
 
-  border-radius: 36px 26px 40px 28px / 34px 30px 42px 26px;
+  margin-bottom: 14px;
 }
+.fluidCard:last-child{ margin-bottom: 0; }
 
-.chaletCard.alt{
-  grid-template-columns: 1fr 130px;
+.fluidCard.reverse{
+  grid-template-columns: 1fr 140px;
 }
-.chaletCard.alt .blobImg{ order: 2; }
-.chaletCard.alt .chaletInfo{ order: 1; text-align:right; }
+.fluidCard.reverse .fluidImg{ order: 2; }
+.fluidCard.reverse .fluidInfo{ order: 1; text-align:right; }
 
-.blobImg{
-  width: 130px;
-  height: 130px;
+.fluidImg{
+  width: 140px;
+  height: 140px;
   border-radius: 55% 45% 60% 40% / 55% 35% 65% 45%;
-  border: 7px solid rgba(247,241,230,.95);
+  border: 8px solid rgba(255,255,255,.70);
   box-shadow: 0 18px 45px rgba(0,0,0,.12);
   background-size: cover;
   background-position:center;
 }
 
-/* placeholders (بدل ما تجيب صور دلوقتي) */
-.blobA{ background-image: radial-gradient(800px 300px at 30% 25%, rgba(198,161,90,.25), transparent 55%), linear-gradient(135deg, #e9efe9, #c9d8cf); }
-.blobB{ background-image: radial-gradient(800px 300px at 60% 25%, rgba(198,161,90,.25), transparent 55%), linear-gradient(135deg, #eef2f6, #cfd9e6); }
-.blobC{ background-image: radial-gradient(800px 300px at 40% 25%, rgba(198,161,90,.25), transparent 55%), linear-gradient(135deg, #f1eee7, #d8d1c3); }
+/* placeholders (بدّلهم بصور حقيقية بعدين) */
+.imgA{ background-image: radial-gradient(800px 300px at 30% 25%, rgba(198,161,90,.25), transparent 55%), linear-gradient(135deg, #e9efe9, #c9d8cf); }
+.imgB{ background-image: radial-gradient(800px 300px at 60% 25%, rgba(198,161,90,.25), transparent 55%), linear-gradient(135deg, #eef2f6, #cfd9e6); }
+.imgC{ background-image: radial-gradient(800px 300px at 40% 25%, rgba(198,161,90,.25), transparent 55%), linear-gradient(135deg, #f1eee7, #d8d1c3); }
 
-.chaletInfo{ min-width:0; }
-.chip{
+.fluidInfo{ min-width:0; position:relative; z-index:1; }
+.tag{
   display:inline-flex;
   align-items:center;
   gap: 6px;
@@ -363,16 +359,16 @@ body{
   font-size: 12px;
   width: fit-content;
 }
-.chipIc{ opacity:.95; }
+.tagIc{ opacity:.95; }
 
-.chaletName{
+.name{
   margin-top: 10px;
   font-family: "Noto Naskh Arabic", serif;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 24px;
   color: var(--brown);
 }
-.chaletPrice{
+.price{
   margin-top: 6px;
   color: rgba(43,58,74,.72);
   font-weight: 800;
@@ -381,11 +377,11 @@ body{
 .miniBtn{
   margin-top: 10px;
   border: 1px solid rgba(43,58,74,.18);
-  background: rgba(255,255,255,.65);
+  background: rgba(255,255,255,.70);
   color: var(--navy);
   font-weight: 900;
   padding: 10px 14px;
-  border-radius: 16px;
+  border-radius: 18px;
   cursor:pointer;
   box-shadow: 0 12px 26px rgba(0,0,0,.08);
   width: fit-content;
@@ -402,7 +398,7 @@ body{
 }
 .miniI{ color: var(--gold2); }
 
-/* ===== Overlap circles ===== */
+/* Overlap circles */
 .bubbles{
   display:flex;
   justify-content:center;
@@ -449,7 +445,7 @@ body{
   color: var(--brown);
 }
 
-/* ===== Footer ===== */
+/* Footer */
 .footer{
   margin-top: 16px;
   background: rgba(255,255,255,.55);
@@ -484,7 +480,7 @@ body{
 .fIc{ color: var(--gold2); }
 .footerSafe{ height: 6px; }
 
-/* ===== Floating WhatsApp (organic + leaf) ===== */
+/* WhatsApp FAB organic + leaf */
 .waFab{
   position: fixed;
   right: calc(var(--safeR) + 16px);
@@ -513,7 +509,6 @@ body{
   box-shadow: 0 10px 18px rgba(0,0,0,.10) inset;
 }
 
-/* Motion reduce */
 @media (prefers-reduced-motion: reduce){
   #dust{ display:none; }
 }
