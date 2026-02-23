@@ -1,53 +1,5 @@
 (function () {
-  const buttons = Array.from(document.querySelectorAll(".nav-btn"));
-  const screens = new Map(Array.from(document.querySelectorAll(".screen")).map(s => [s.id, s]));
-  const indicator = document.querySelector(".nav-indicator");
-
-  // ---------- NAV indicator ----------
-  function positionIndicator(activeBtn) {
-    if (!indicator || !activeBtn) return;
-    const nav = activeBtn.parentElement;
-    const navRect = nav.getBoundingClientRect();
-    const btnRect = activeBtn.getBoundingClientRect();
-    const x = btnRect.left - navRect.left;
-    indicator.style.width = `${btnRect.width}px`;
-    indicator.style.transform = `translateX(${x}px)`;
-  }
-
-  function restartTitleAnimation() {
-    const stroke = document.querySelector(".t-stroke");
-    const fill = document.querySelector(".t-fill");
-    if (!stroke || !fill) return;
-
-    stroke.style.animation = "none";
-    fill.style.animation = "none";
-    void stroke.offsetWidth; // force reflow
-    stroke.style.animation = "";
-    fill.style.animation = "";
-  }
-
-  function setActive(targetId) {
-    buttons.forEach(btn => {
-      const isOn = btn.dataset.target === targetId;
-      btn.classList.toggle("is-active", isOn);
-      btn.setAttribute("aria-selected", isOn ? "true" : "false");
-      if (isOn) positionIndicator(btn);
-    });
-
-    screens.forEach((el, id) => el.classList.toggle("is-visible", id === targetId));
-
-    if (targetId === "home") restartTitleAnimation();
-  }
-
-  buttons.forEach(btn => btn.addEventListener("click", () => setActive(btn.dataset.target)));
-
-  window.addEventListener("resize", () => {
-    const active = document.querySelector(".nav-btn.is-active");
-    if (active) positionIndicator(active);
-    resizeParticlesCanvas();
-  });
-
-  // ---------- Asset loader (logo/video) ----------
+  // ---- assets: logo + video (يحاول أكتر من امتداد) ----
   function tryImage(imgEl, baseName) {
     const exts = [".png", ".webp", ".jpg", ".jpeg", ".svg"];
     let i = 0;
@@ -62,15 +14,12 @@
   function tryVideo(videoEl, baseName) {
     const exts = [".mp4", ".mov", ".webm"];
     let i = 0;
-
     const setSource = () => {
       if (i >= exts.length) return;
-      const url = `${baseName}${exts[i++]}`;
-      videoEl.src = url;
+      videoEl.src = `${baseName}${exts[i++]}`;
       const p = videoEl.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
     };
-
     videoEl.addEventListener("error", setSource);
     setSource();
   }
@@ -81,15 +30,47 @@
   const heroVideo = document.getElementById("heroVideo");
   if (heroVideo) tryVideo(heroVideo, heroVideo.dataset.asset || "bck1");
 
-  // ---------- Particles (lightweight) ----------
+  // ---- rotating testimonial ----
+  const reviews = [
+    { text: '"إقامة ممتازة ومكان هادي جدًا."', by: "— Ahmed" },
+    { text: '"النضافة ممتازة والإطلالة تحفة."', by: "— Sarah K." },
+    { text: '"سهل الحجز والتعامل راقي."', by: "— Omar" },
+  ];
+
+  let r = 0;
+  const reviewText = document.getElementById("reviewText");
+  const reviewBy = document.getElementById("reviewBy");
+
+  function swapReview() {
+    if (!reviewText || !reviewBy) return;
+    r = (r + 1) % reviews.length;
+
+    reviewText.style.opacity = "0";
+    reviewBy.style.opacity = "0";
+
+    setTimeout(() => {
+      reviewText.textContent = reviews[r].text;
+      reviewBy.textContent = reviews[r].by;
+      reviewText.style.opacity = "1";
+      reviewBy.style.opacity = "1";
+    }, 220);
+  }
+
+  if (reviewText && reviewBy) {
+    reviewText.style.transition = "opacity .22s ease";
+    reviewBy.style.transition = "opacity .22s ease";
+    setInterval(swapReview, 4200);
+  }
+
+  // ---- particles خفيفة ----
   const canvas = document.getElementById("particles");
   const ctx = canvas ? canvas.getContext("2d") : null;
 
   let W = 0, H = 0, DPR = 1;
   let particles = [];
-  const COUNT = 44; // خفيف على iPhone
+  const COUNT = 46; // خفيف
 
-  function resizeParticlesCanvas() {
+  function resize() {
     if (!canvas || !ctx) return;
     DPR = Math.min(window.devicePixelRatio || 1, 2);
     W = Math.floor(window.innerWidth * DPR);
@@ -100,24 +81,22 @@
 
   function rand(min, max) { return Math.random() * (max - min) + min; }
 
-  function initParticles() {
+  function init() {
     if (!canvas || !ctx) return;
     particles = Array.from({ length: COUNT }, () => ({
       x: rand(0, W),
       y: rand(0, H),
-      r: rand(1.1, 2.6) * DPR,
+      r: rand(1.2, 2.6) * DPR,
       vx: rand(-0.18, 0.18) * DPR,
-      vy: rand(-0.12, 0.12) * DPR,
-      a: rand(0.08, 0.22)
+      vy: rand(-0.10, 0.10) * DPR,
+      a: rand(0.06, 0.18)
     }));
   }
 
-  function stepParticles() {
+  function tick() {
     if (!canvas || !ctx) return;
-
     ctx.clearRect(0, 0, W, H);
 
-    // رسم dots خفيفة
     for (const p of particles) {
       p.x += p.vx;
       p.y += p.vy;
@@ -133,14 +112,11 @@
       ctx.fill();
     }
 
-    requestAnimationFrame(stepParticles);
+    requestAnimationFrame(tick);
   }
 
-  // Start
-  resizeParticlesCanvas();
-  initParticles();
-  stepParticles();
-
-  // Default view
-  setActive("home");
+  resize();
+  init();
+  tick();
+  window.addEventListener("resize", () => { resize(); init(); });
 })();
