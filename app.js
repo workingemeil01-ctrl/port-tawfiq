@@ -1,5 +1,5 @@
 (() => {
-  // ====== Drawer ======
+  // Drawer
   const drawer = document.getElementById("drawer");
   const overlay = document.getElementById("drawerOverlay");
   const openBtn = document.getElementById("openDrawer");
@@ -30,7 +30,7 @@
     a.addEventListener("click", () => closeDrawer());
   });
 
-  // ====== Assets (logo + video) ======
+  // Assets (try extensions)
   function tryImage(imgEl, base) {
     const exts = [".png", ".webp", ".jpg", ".jpeg", ".svg"];
     let i = 0;
@@ -61,8 +61,8 @@
   const heroVideo = document.getElementById("heroVideo");
   if (heroVideo) tryVideo(heroVideo, heroVideo.dataset.asset || "bck1");
 
-  // ====== WhatsApp link (placeholder دلوقتي) ======
-  // لما تبقى جاهز، حط رقمك بصيغة دولية:
+  // WhatsApp link placeholder
+  // غيره بعدين:
   // const waLink = "https://wa.me/201064800205";
   const waLink = "#";
 
@@ -71,13 +71,12 @@
   if (waFab) waFab.href = waLink;
   if (bookNow) bookNow.href = waLink;
 
-  // ====== Soft dust particles ======
+  // Soft dust particles
   const canvas = document.getElementById("dust");
   const ctx = canvas?.getContext("2d");
-
   let W = 0, H = 0, DPR = 1;
   let dots = [];
-  const COUNT = 42;
+  const COUNT = 40;
 
   const rand = (a,b)=> Math.random()*(b-a)+a;
 
@@ -95,10 +94,10 @@
     dots = Array.from({length: COUNT}, () => ({
       x: rand(0, W),
       y: rand(0, H),
-      r: rand(1.2, 2.6) * DPR,
-      vx: rand(-0.10, 0.10) * DPR,
-      vy: rand(-0.06, 0.06) * DPR,
-      a: rand(0.05, 0.14)
+      r: rand(1.2, 2.5) * DPR,
+      vx: rand(-0.08, 0.08) * DPR,
+      vy: rand(-0.05, 0.05) * DPR,
+      a: rand(0.05, 0.12)
     }));
   }
 
@@ -117,7 +116,7 @@
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(90,70,50,${p.a})`; // بني خفيف
+      ctx.fillStyle = `rgba(90,70,50,${p.a})`;
       ctx.fill();
     }
 
