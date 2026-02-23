@@ -10,13 +10,13 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <!-- خلفية كاملة بدون فراغات -->
+  <!-- Background (no gaps) -->
   <div class="bg" aria-hidden="true"></div>
   <canvas id="dust" aria-hidden="true"></canvas>
 
@@ -31,41 +31,41 @@
     <nav class="drawerNav" aria-label="روابط">
       <a class="drawerLink" href="#home">الرئيسية</a>
       <a class="drawerLink" href="#chalets">الشاليهات</a>
-      <a class="drawerLink" href="#why">ليه إحنا</a>
+      <a class="drawerLink" href="#why">تجربة لا تُنسى</a>
       <a class="drawerLink" href="#contact">التواصل</a>
     </nav>
 
-    <div class="drawerNote">هنحط الصور والتفاصيل الحقيقية بعدين.</div>
+    <div class="drawerNote">هنضيف صور الشاليهات الحقيقية والتفاصيل بعدين.</div>
   </aside>
 
   <!-- Header -->
   <header class="header" id="header">
     <div class="headerInner">
-      <!-- Logo (hand-drawn vibe) -->
-      <div class="brand">
-        <img id="brandLogo" class="brandStamp" data-asset="seuz" alt="شعار" />
-        <div class="brandText">
-          <div class="brandName">شاليهات</div>
-          <div class="brandName">بورتوفيق</div>
-        </div>
-      </div>
+      <!-- Right: Hamburger -->
+      <button class="iconBtn" id="openDrawer" type="button" aria-label="فتح القائمة">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 7h14M5 12h14M5 17h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </button>
 
-      <div class="headerRight">
-        <a class="bookNow" id="bookNow" href="#" aria-label="احجز الآن واتساب">
-          <span class="bookIc" aria-hidden="true">
-            <svg viewBox="0 0 32 32">
-              <path fill="currentColor" d="M19.1 17.6c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.3.3-.6.1c-.3-.2-1.2-.4-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.7-.9-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1.1 1-1.1 2.5 1.1 3 1.2 3.2c.2.2 2.2 3.4 5.4 4.8.8.3 1.4.5 1.9.6.8.2 1.6.2 2.2.1.7-.1 1.8-.7 2.1-1.4.3-.7.3-1.3.2-1.4s-.3-.2-.6-.3Z"/>
-              <path fill="currentColor" d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.6C13.9 28.2 14.9 28.5 16 28.5c6.6 0 12-5.4 12-12S22.6 3 16 3Zm0 23c-1 0-2-.2-2.9-.6l-.6-.3-4.9.9.9-4.8-.3-.6C7.7 18.8 7.4 17 7.4 15 7.4 10.2 11.2 6.4 16 6.4S24.6 10.2 24.6 15 20.8 26 16 26Z"/>
-            </svg>
-          </span>
-          <span class="bookTxt">احجز الآن</span>
-        </a>
-
-        <button class="iconBtn" id="openDrawer" type="button" aria-label="فتح القائمة">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 7h14M5 12h14M5 17h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- Center: Book now -->
+      <a class="bookNow" id="bookNow" href="#" aria-label="احجز الآن واتساب">
+        <span class="bookIc" aria-hidden="true">
+          <svg viewBox="0 0 32 32">
+            <path fill="currentColor" d="M19.1 17.6c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.3.3-.6.1c-.3-.2-1.2-.4-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.7-.9-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1.1 1-1.1 2.5 1.1 3 1.2 3.2c.2.2 2.2 3.4 5.4 4.8.8.3 1.4.5 1.9.6.8.2 1.6.2 2.2.1.7-.1 1.8-.7 2.1-1.4.3-.7.3-1.3.2-1.4s-.3-.2-.6-.3Z"/>
+            <path fill="currentColor" d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.6C13.9 28.2 14.9 28.5 16 28.5c6.6 0 12-5.4 12-12S22.6 3 16 3Zm0 23c-1 0-2-.2-2.9-.6l-.6-.3-4.9.9.9-4.8-.3-.6C7.7 18.8 7.4 17 7.4 15 7.4 10.2 11.2 6.4 16 6.4S24.6 10.2 24.6 15 20.8 26 16 26Z"/>
           </svg>
-        </button>
+        </span>
+        <span class="bookTxt">احجز الآن</span>
+      </a>
+
+      <!-- Left: Hand-drawn logo text + stamp -->
+      <div class="brand">
+        <div class="brandText">
+          <div class="brandLine">شاليهات</div>
+          <div class="brandLine">بورتوفيق</div>
+        </div>
+        <img id="brandLogo" class="brandStamp" data-asset="seuz" alt="Logo" />
       </div>
     </div>
   </header>
@@ -73,86 +73,89 @@
   <main class="page">
     <!-- HERO -->
     <section class="hero" id="home" aria-label="واجهة">
-      <div class="heroMask">
+      <div class="heroWave">
         <video id="heroVideo" class="heroVideo" autoplay muted loop playsinline preload="metadata" data-asset="bck1"></video>
         <div class="heroShade" aria-hidden="true"></div>
-      </div>
 
-      <div class="heroText">
-        <h1 class="h1">ملاذك الهادئ على القناة</h1>
-        <p class="sub">حيث الطبيعة تحتضنك</p>
-        <a class="woodBtn" href="#chalets">احجز استجمامك</a>
+        <div class="heroText">
+          <h1 class="h1">ملاذك الهادئ على القناة</h1>
+          <p class="sub">حيث الطبيعة تحتضنك</p>
+          <a class="woodBtn" href="#chalets">احجز استجمامك</a>
+        </div>
       </div>
     </section>
 
-    <!-- Chalets -->
+    <!-- CHALETS -->
     <section class="section" id="chalets" aria-label="الشاليهات">
       <h2 class="secTitle">واحتك الخاصة</h2>
 
-      <div class="chaletList">
-        <article class="chaletCard">
-          <div class="blobImg blobA" role="img" aria-label="صورة شاليه"></div>
-          <div class="chaletInfo">
-            <div class="chip">
-              <span class="chipIc" aria-hidden="true">🌿</span>
+      <div class="paper">
+        <article class="fluidCard">
+          <div class="fluidImg imgA" role="img" aria-label="صورة شاليه"></div>
+
+          <div class="fluidInfo">
+            <div class="tag">
+              <span class="tagIc">🌿</span>
               <span>حديقة</span>
             </div>
 
-            <div class="chaletName">شاليه النسيم</div>
-            <div class="chaletPrice">300 جنيه</div>
+            <div class="name">شاليه النسيم</div>
+            <div class="price">300 جنيه</div>
 
             <button class="miniBtn" type="button">تفاصيل</button>
 
-            <div class="miniIcons" aria-label="مميزات">
+            <div class="miniIcons">
               <span class="miniI">🌿</span><span>حديقة</span>
               <span class="miniI">🕊️</span><span>هدوء</span>
             </div>
           </div>
         </article>
 
-        <article class="chaletCard alt">
-          <div class="blobImg blobB" role="img" aria-label="صورة شاليه"></div>
-          <div class="chaletInfo">
-            <div class="chip">
-              <span class="chipIc" aria-hidden="true">🛋️</span>
-              <span>راحة</span>
+        <article class="fluidCard reverse">
+          <div class="fluidImg imgB" role="img" aria-label="صورة شاليه"></div>
+
+          <div class="fluidInfo">
+            <div class="tag">
+              <span class="tagIc">🌊</span>
+              <span>شاطئ</span>
             </div>
 
-            <div class="chaletName">شاليه الغدور</div>
-            <div class="chaletPrice">200 جنيه</div>
+            <div class="name">شاليه الغدور</div>
+            <div class="price">200 جنيه</div>
 
             <button class="miniBtn" type="button">تفاصيل</button>
 
             <div class="miniIcons">
-              <span class="miniI">🌊</span><span>قريب من البحر</span>
               <span class="miniI">☀️</span><span>إطلالة</span>
+              <span class="miniI">🧼</span><span>نضافة</span>
             </div>
           </div>
         </article>
 
-        <article class="chaletCard">
-          <div class="blobImg blobC" role="img" aria-label="صورة شاليه"></div>
-          <div class="chaletInfo">
-            <div class="chip">
-              <span class="chipIc" aria-hidden="true">🌅</span>
+        <article class="fluidCard">
+          <div class="fluidImg imgC" role="img" aria-label="صورة شاليه"></div>
+
+          <div class="fluidInfo">
+            <div class="tag">
+              <span class="tagIc">🌅</span>
               <span>منظر</span>
             </div>
 
-            <div class="chaletName">شاليه الفرين</div>
-            <div class="chaletPrice">500 جنيه</div>
+            <div class="name">شاليه الفرين</div>
+            <div class="price">500 جنيه</div>
 
             <button class="miniBtn" type="button">تفاصيل</button>
 
             <div class="miniIcons">
               <span class="miniI">👨‍👩‍👧‍👦</span><span>عائلي</span>
-              <span class="miniI">🧼</span><span>نضافة</span>
+              <span class="miniI">🍃</span><span>هواء</span>
             </div>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- Why / Organic circles -->
+    <!-- WHY -->
     <section class="section" id="why" aria-label="تجربة">
       <h2 class="secTitle">تجربة لا تُنسى</h2>
 
@@ -177,24 +180,14 @@
       </div>
     </section>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer class="footer" id="contact" aria-label="تواصل">
       <div class="footerLine"></div>
-
       <div class="footerInner">
         <div class="footerBrand">شاليهات بورتوفيق</div>
-
-        <div class="footerRow">
-          <span class="fIc">📍</span>
-          <span>بورتوفيق | بجوار نادي التجذيف</span>
-        </div>
-
-        <div class="footerRow">
-          <span class="fIc">📞</span>
-          <span>01064800205</span>
-        </div>
+        <div class="footerRow"><span class="fIc">📍</span><span>بورتوفيق | بجوار نادي التجذيف</span></div>
+        <div class="footerRow"><span class="fIc">📞</span><span>01064800205</span></div>
       </div>
-
       <div class="footerSafe" aria-hidden="true"></div>
     </footer>
   </main>
