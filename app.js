@@ -1,12 +1,14 @@
 (function () {
-  // ---- assets: logo + video (يحاول أكتر من امتداد) ----
+  // ---- assets: logo + video (tries multiple extensions) ----
   function tryImage(imgEl, baseName) {
     const exts = [".png", ".webp", ".jpg", ".jpeg", ".svg"];
     let i = 0;
+
     const next = () => {
       if (i >= exts.length) return;
       imgEl.src = `${baseName}${exts[i++]}`;
     };
+
     imgEl.onerror = next;
     next();
   }
@@ -14,12 +16,15 @@
   function tryVideo(videoEl, baseName) {
     const exts = [".mp4", ".mov", ".webm"];
     let i = 0;
+
     const setSource = () => {
       if (i >= exts.length) return;
-      videoEl.src = `${baseName}${exts[i++]}`;
+      const url = `${baseName}${exts[i++]}`;
+      videoEl.src = url;
       const p = videoEl.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
     };
+
     videoEl.addEventListener("error", setSource);
     setSource();
   }
@@ -30,45 +35,58 @@
   const heroVideo = document.getElementById("heroVideo");
   if (heroVideo) tryVideo(heroVideo, heroVideo.dataset.asset || "bck1");
 
-  // ---- rotating testimonial ----
-  const reviews = [
-    { text: '"إقامة ممتازة ومكان هادي جدًا."', by: "— Ahmed" },
-    { text: '"النضافة ممتازة والإطلالة تحفة."', by: "— Sarah K." },
-    { text: '"سهل الحجز والتعامل راقي."', by: "— Omar" },
-  ];
+  // ---- tabs: highlight active on click + smooth scroll ----
+  const tabs = Array.from(document.querySelectorAll(".tab"));
+  const sections = tabs
+    .map(t => document.querySelector(t.getAttribute("href")))
+    .filter(Boolean);
 
-  let r = 0;
-  const reviewText = document.getElementById("reviewText");
-  const reviewBy = document.getElementById("reviewBy");
-
-  function swapReview() {
-    if (!reviewText || !reviewBy) return;
-    r = (r + 1) % reviews.length;
-
-    reviewText.style.opacity = "0";
-    reviewBy.style.opacity = "0";
-
-    setTimeout(() => {
-      reviewText.textContent = reviews[r].text;
-      reviewBy.textContent = reviews[r].by;
-      reviewText.style.opacity = "1";
-      reviewBy.style.opacity = "1";
-    }, 220);
+  function setActiveTab(hash) {
+    tabs.forEach(t => t.classList.toggle("is-active", t.getAttribute("href") === hash));
   }
 
-  if (reviewText && reviewBy) {
-    reviewText.style.transition = "opacity .22s ease";
-    reviewBy.style.transition = "opacity .22s ease";
-    setInterval(swapReview, 4200);
-  }
+  tabs.forEach(t => {
+    t.addEventListener("click", (e) => {
+      const hash = t.getAttribute("href");
+      const target = document.querySelector(hash);
+      if (!target) return;
 
-  // ---- particles خفيفة ----
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", hash);
+      setActiveTab(hash);
+    });
+  });
+
+  // update active tab while scrolling
+  const header = document.querySelector(".header");
+  const headerH = () => (header ? header.getBoundingClientRect().height : 0);
+
+  const obs = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (!visible) return;
+
+    const id = "#" + visible.target.id;
+    setActiveTab(id);
+  }, {
+    root: null,
+    rootMargin: () => `-${Math.round(headerH())}px 0px -60% 0px`,
+    threshold: [0.2, 0.35, 0.5, 0.7]
+  });
+
+  sections.forEach(s => obs.observe(s));
+
+  // ---- particles (lightweight) ----
   const canvas = document.getElementById("particles");
   const ctx = canvas ? canvas.getContext("2d") : null;
 
   let W = 0, H = 0, DPR = 1;
   let particles = [];
-  const COUNT = 46; // خفيف
+  const COUNT = 46;
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
 
   function resize() {
     if (!canvas || !ctx) return;
@@ -78,8 +96,6 @@
     canvas.width = W;
     canvas.height = H;
   }
-
-  function rand(min, max) { return Math.random() * (max - min) + min; }
 
   function init() {
     if (!canvas || !ctx) return;
@@ -119,4 +135,7 @@
   init();
   tick();
   window.addEventListener("resize", () => { resize(); init(); });
+
+  // ---- later: WhatsApp link (placeholder now) ----
+  // لما تيجي تربطه بواتساب هنغير href بتاع #waBtn
 })();
