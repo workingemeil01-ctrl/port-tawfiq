@@ -1,7 +1,6 @@
 :root{
   --txt: rgba(255,255,255,.92);
   --muted: rgba(255,255,255,.70);
-  --radius: 18px;
 
   --safeT: env(safe-area-inset-top);
   --safeB: env(safe-area-inset-bottom);
@@ -12,56 +11,66 @@
 *{ box-sizing:border-box; }
 html,body{ height:100%; margin:0; }
 
+/* مهم جدًا عشان iOS ما يطلعش أبيض في الـ safe-area */
+html{ background:#050814; }
 body{
+  background:#050814;
   color: var(--txt);
   font-family: "Cairo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   overflow:hidden;
-  background: transparent; /* مهم: عشان الفراغات تبان من الخلفية المتغيّرة */
   -webkit-tap-highlight-color: transparent;
+
+  /* مهم: يعزل طبقات z-index ويخلي الخلفية تظهر في كل حتة */
+  position: relative;
+  isolation: isolate;
 }
 
-/* خلفية متغيّرة تغطي كل الشاشة (حتى الفراغات) */
+/* الخلفية المتغيّرة (مغطية الشاشة كلها) */
 .ambient{
   position: fixed;
   inset: 0;
-  z-index: -3;
+  z-index: 0;              /* بدل السالب */
   pointer-events:none;
+
   background:
     radial-gradient(900px 520px at 12% 18%, rgba(120,90,255,.38), transparent 60%),
     radial-gradient(760px 520px at 88% 22%, rgba(40,210,255,.32), transparent 62%),
     radial-gradient(920px 700px at 50% 92%, rgba(255,120,200,.22), transparent 62%),
     linear-gradient(180deg, #050814, #070a1a 55%, #0a1233);
+
   filter: hue-rotate(0deg);
   animation: hue 14s linear infinite;
 }
-
 @keyframes hue{ to { filter: hue-rotate(360deg); } }
 
-/* Particles canvas */
+/* Particles */
 #particles{
   position: fixed;
   inset: 0;
-  z-index: -2;
+  z-index: 1;             /* فوق الخلفية */
   pointer-events: none;
   width: 100%;
   height: 100%;
 }
 
-/* Layout: مفيش “لون ثابت” في الفراغات */
+/* App layer فوق كل حاجة */
 .app{
+  position: relative;
+  z-index: 2;
+
   height: 100svh;
   height: 100dvh;
   display:flex;
   flex-direction:column;
 
-  padding-top: calc(10px + var(--safeT));
-  padding-bottom: calc(10px + var(--safeB));
-  padding-left: calc(12px + var(--safeL));
-  padding-right: calc(12px + var(--safeR));
-  background: transparent;
+  padding-top: calc(var(--safeT) + 10px);
+  padding-bottom: calc(var(--safeB) + 10px);
+  padding-left: calc(var(--safeL) + 12px);
+  padding-right: calc(var(--safeR) + 12px);
 }
 
-.topbar{ flex: 0 0 auto; z-index: 50; }
+/* Top bar */
+.topbar{ flex: 0 0 auto; }
 
 .main{
   flex: 1 1 auto;
@@ -70,100 +79,104 @@ body{
   position: relative;
 }
 
-/* Nav مودرن */
+/* ======= NAV (مودرن + واضح) ======= */
 .nav{
   position: relative;
-  display:flex;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
-  align-items:center;
-  justify-content: space-between;
 
   padding: 10px;
   border-radius: 24px;
 
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(12, 14, 35, .55);
+  border: 1px solid rgba(255,255,255,.16);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 16px 40px rgba(0,0,0,.32);
+
   overflow:hidden;
 }
-
 .nav::before{
   content:"";
   position:absolute;
   inset:-2px;
   border-radius: inherit;
-  background: radial-gradient(900px 280px at 50% 0%, rgba(255,255,255,.18), transparent 55%);
+  background: radial-gradient(900px 280px at 50% 0%, rgba(255,255,255,.16), transparent 55%);
   opacity:.55;
   pointer-events:none;
 }
 
-/* Active indicator (pill) */
+/* indicator متحرك ورا الزر */
 .nav-indicator{
   position:absolute;
   top: 10px;
   bottom: 10px;
   right: 10px;
   width: 80px;
-  border-radius: 18px;
 
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
   border: 1px solid rgba(255,255,255,.22);
   box-shadow: 0 16px 36px rgba(0,0,0,.30);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 
   transition: transform .22s ease, width .22s ease;
   z-index: 0;
 }
 
+/* زر مودرن */
 .nav-btn{
   position: relative;
   z-index: 1;
-  flex: 1 1 auto;
-  min-width: 0;
 
   border: 0;
-  background: transparent;
-  color: rgba(255,255,255,.86);
+  background: rgba(255,255,255,.05);
+  color: rgba(255,255,255,.92);
 
   border-radius: 18px;
-  padding: 11px 10px;
+  padding: 10px 8px;
+
   cursor:pointer;
 
   display:flex;
+  flex-direction: column;
   align-items:center;
   justify-content:center;
-  gap: 8px;
+  gap: 6px;
 
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: .2px;
+  min-height: 54px;
 
   transition: transform .14s ease, filter .14s ease;
 }
-
 .nav-btn:active{ transform: scale(.985); }
 
+/* أيقونة بسيطة */
 .btn-ic{
-  width: 10px; height: 10px;
+  width: 12px; height: 12px;
   border-radius: 999px;
-  background: rgba(255,255,255,.30);
+  background: rgba(255,255,255,.25);
   box-shadow: 0 0 0 1px rgba(255,255,255,.18) inset;
-  flex: 0 0 auto;
 }
-
 .nav-btn.is-active .btn-ic{
   background: rgba(255,255,255,.70);
-  box-shadow: 0 0 0 1px rgba(255,255,255,.30) inset, 0 0 18px rgba(255,255,255,.18);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.30) inset, 0 0 18px rgba(255,255,255,.16);
 }
 
+/* النص مايتقصش + يظهر واضح */
 .btn-txt{
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align:center;
+
+  /* مهم: منع الـ ... */
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+
+  font-weight: 800;
+  font-size: clamp(11px, 2.8vw, 14px);
+  line-height: 1.15;
+
+  text-shadow: 0 10px 22px rgba(0,0,0,.45);
 }
 
 /* Screens */
@@ -189,7 +202,7 @@ body{
   overflow:hidden;
   border: 1px solid rgba(255,255,255,.12);
   box-shadow: 0 18px 60px rgba(0,0,0,.45);
-  background: rgba(0,0,0,.10); /* شفاف عشان الخلفية تفضل موجودة */
+  background: rgba(0,0,0,.10);
 }
 
 .hero-video{
@@ -206,10 +219,10 @@ body{
   inset:0;
   background:
     radial-gradient(900px 520px at 50% 40%, rgba(0,0,0,.18), rgba(0,0,0,.56)),
-    linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.52));
+    linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.52));
 }
 
-/* Title box */
+/* Title */
 .hero-center{
   position:absolute;
   inset:0;
@@ -248,13 +261,7 @@ body{
   60%     { transform: translateX(-55%) rotate(12deg); opacity:.0; }
 }
 
-/* SVG writing */
-.title-svg{
-  width:100%;
-  height:auto;
-  display:block;
-}
-
+.title-svg{ width:100%; height:auto; display:block; }
 .title-svg text{
   font-family: "Aref Ruqaa", serif;
   font-weight: 700;
@@ -273,18 +280,16 @@ body{
   stroke-dashoffset: 1600;
   animation: draw 2.6s ease forwards;
 }
-
 .t-fill{
   fill: rgba(255,255,255,.92);
   opacity: 0;
   animation: fillIn .55s ease forwards;
   animation-delay: 2.2s;
 }
-
 @keyframes draw{ to { stroke-dashoffset: 0; } }
 @keyframes fillIn{ to { opacity: 1; } }
 
-/* Bottom logo */
+/* Logo */
 .hero-footer{
   position:absolute;
   left: 50%;
@@ -294,7 +299,6 @@ body{
   align-items:center;
   justify-content:center;
 }
-
 .brand{
   height: 52px;
   width:auto;
@@ -302,7 +306,7 @@ body{
   filter: drop-shadow(0 12px 22px rgba(0,0,0,.45));
 }
 
-/* Other screens panels: شفافة أكتر عشان تبان الخلفية المتغيّرة */
+/* Panels */
 .panel{
   height: 100%;
   border-radius: 28px;
@@ -313,23 +317,15 @@ body{
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 18px 60px rgba(0,0,0,.40);
 }
-
 .panel-title{
   margin: 2px 0 12px;
   font-size: 18px;
   font-weight: 800;
   color: var(--txt);
 }
-
 .panel-body{
   height: calc(100% - 46px);
   border-radius: 18px;
   border: 1px dashed rgba(255,255,255,.18);
   background: rgba(255,255,255,.03);
-}
-
-/* Responsive tweaks */
-@media (max-width: 380px){
-  .nav-btn{ font-size: 13px; padding: 11px 8px; }
-  .title-svg text{ font-size: 90px; }
 }
