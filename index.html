@@ -6,116 +6,172 @@
   <meta name="theme-color" content="#050814" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>شاليها بورتوفيق</title>
+  <title>شاليهات بورتوفيق</title>
 
-  <!-- UI Font (Modern) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <!-- متغيّرة + بتغطي أي فراغات -->
+  <!-- خلفية متغيّرة + بتغطي أي Safe-Area -->
   <div class="ambient" aria-hidden="true"></div>
-
-  <!-- Particles -->
   <canvas id="particles" aria-hidden="true"></canvas>
 
-  <div class="app" id="app">
-    <header class="topbar" aria-label="القائمة العلوية">
-      <nav class="nav" role="tablist" aria-label="التنقل">
-        <span class="nav-indicator" aria-hidden="true"></span>
-
-        <button class="nav-btn is-active" role="tab" aria-selected="true" data-target="home" type="button">
-          <span class="btn-ic" aria-hidden="true"></span>
-          <span class="btn-txt">الرئيسية</span>
-        </button>
-
-        <button class="nav-btn" role="tab" aria-selected="false" data-target="prices" type="button">
-          <span class="btn-ic" aria-hidden="true"></span>
-          <span class="btn-txt">الأسعار</span>
-        </button>
-
-        <button class="nav-btn" role="tab" aria-selected="false" data-target="stay" type="button">
-          <span class="btn-ic" aria-hidden="true"></span>
-          <span class="btn-txt">تفاصيل الإقامة</span>
-        </button>
-
-        <button class="nav-btn" role="tab" aria-selected="false" data-target="booking" type="button">
-          <span class="btn-ic" aria-hidden="true"></span>
-          <span class="btn-txt">التوافر والحجز</span>
-        </button>
-      </nav>
+  <div class="page">
+    <!-- Header -->
+    <header class="header">
+      <div class="brandline">
+        <img id="brandLogo" class="logo" data-asset="seuz" alt="شعار" />
+        <div class="brandtext">
+          <div class="brandname">Port Tawfiq Chalets</div>
+          <div class="brandsub">شاليهات • بحر • إقامة مميزة</div>
+        </div>
+      </div>
     </header>
 
-    <main class="main">
-      <!-- HOME -->
-      <section class="screen is-visible" id="home" aria-label="الرئيسية">
-        <div class="hero">
-          <video
-            id="heroVideo"
-            class="hero-video"
-            autoplay muted loop playsinline
-            preload="metadata"
-            data-asset="bck1"
-          ></video>
+    <!-- Hero -->
+    <section class="hero" aria-label="Hero">
+      <div class="heroMedia">
+        <video id="heroVideo" class="heroVideo" autoplay muted loop playsinline preload="metadata" data-asset="bck1"></video>
+        <div class="heroOverlay" aria-hidden="true"></div>
+      </div>
 
-          <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="heroCard">
+        <div class="heroKicker">هروبك المثالي على البحر</div>
+        <h1 class="heroTitle">إقامة هادية بإطلالة ساحرة</h1>
+        <p class="heroDesc">اختار الشاليه المناسب وشوف التفاصيل والأسعار بسهولة.</p>
 
-          <div class="hero-center">
-            <div class="glass-title" aria-label="شاليها بورتوفيق">
-              <!-- SVG Stroke draw (writing effect) -->
-              <svg class="title-svg" viewBox="0 0 1200 260" preserveAspectRatio="xMidYMid meet">
-                <defs>
-                  <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation="2.2" result="blur" />
-                    <feMerge>
-                      <feMergeNode in="blur"/>
-                      <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                  </filter>
-                </defs>
+        <div class="heroActions">
+          <a class="btn primary" href="#chalets">شوف الشاليهات</a>
+          <a class="btn ghost" href="#contact">تواصل</a>
+        </div>
+      </div>
+    </section>
 
-                <text x="50%" y="60%" text-anchor="middle" class="t-stroke">شاليها بورتوفيق</text>
-                <text x="50%" y="60%" text-anchor="middle" class="t-fill" filter="url(#softGlow)">شاليها بورتوفيق</text>
-              </svg>
+    <!-- Our Chalets -->
+    <section class="section" id="chalets" aria-label="شاليهاتنا">
+      <div class="sectionHead">
+        <h2>شاليهاتنا</h2>
+        <p>قائمة بسيطة — صور كبيرة ومعلومات أساسية.</p>
+      </div>
 
-              <div class="title-shine" aria-hidden="true"></div>
+      <div class="cards">
+        <!-- Card 1 -->
+        <article class="card">
+          <div class="cardMedia placeholder" role="img" aria-label="صورة الشاليه"></div>
+          <div class="cardBody">
+            <div class="cardTop">
+              <div class="cardTitle">Sunset View</div>
+              <div class="cardPrice">السعر: XXXX / ليلة</div>
             </div>
+            <a class="btn small" href="#!" aria-label="عرض تفاصيل الشاليه">عرض التفاصيل</a>
           </div>
+        </article>
 
-          <div class="hero-footer" aria-label="شعار">
-            <img id="brandLogo" class="brand" data-asset="seuz" alt="seuz" />
+        <!-- Card 2 -->
+        <article class="card">
+          <div class="cardMedia placeholder" role="img" aria-label="صورة الشاليه"></div>
+          <div class="cardBody">
+            <div class="cardTop">
+              <div class="cardTitle">Sea Breeze</div>
+              <div class="cardPrice">السعر: XXXX / ليلة</div>
+            </div>
+            <a class="btn small" href="#!">عرض التفاصيل</a>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card">
+          <div class="cardMedia placeholder" role="img" aria-label="صورة الشاليه"></div>
+          <div class="cardBody">
+            <div class="cardTop">
+              <div class="cardTitle">Family Comfort</div>
+              <div class="cardPrice">السعر: XXXX / ليلة</div>
+            </div>
+            <a class="btn small" href="#!">عرض التفاصيل</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Why Us -->
+    <section class="section" aria-label="ليه إحنا">
+      <div class="sectionHead">
+        <h2>ليه تختارنا</h2>
+        <p>مميزات مختصرة وواضحة.</p>
+      </div>
+
+      <div class="why">
+        <div class="whyItem">
+          <span class="ic" aria-hidden="true">
+            <!-- location icon -->
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z" stroke="currentColor" stroke-width="1.8"/><path d="M12 10.5a2.3 2.3 0 1 0 0-4.6 2.3 2.3 0 0 0 0 4.6Z" stroke="currentColor" stroke-width="1.8"/></svg>
+          </span>
+          <div>
+            <div class="whyTitle">موقع مميز</div>
+            <div class="whyDesc">قريب من البحر والخدمات الأساسية.</div>
           </div>
         </div>
-      </section>
 
-      <!-- PRICES -->
-      <section class="screen" id="prices" aria-label="الأسعار">
-        <div class="panel">
-          <h2 class="panel-title">الأسعار</h2>
-          <div class="panel-body placeholder"></div>
+        <div class="whyItem">
+          <span class="ic" aria-hidden="true">
+            <!-- beach icon -->
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3 20c4-2 14-2 18 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 18c1-5 4-9 9-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 6c2 1 5 1 8 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </span>
+          <div>
+            <div class="whyTitle">دخول شاطئ</div>
+            <div class="whyDesc">إحساس المصيف على طول.</div>
+          </div>
         </div>
-      </section>
 
-      <!-- STAY -->
-      <section class="screen" id="stay" aria-label="تفاصيل الإقامة">
-        <div class="panel">
-          <h2 class="panel-title">تفاصيل الإقامة</h2>
-          <div class="panel-body placeholder"></div>
+        <div class="whyItem">
+          <span class="ic" aria-hidden="true">
+            <!-- view icon -->
+            <svg viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" stroke="currentColor" stroke-width="1.8"/><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.8"/></svg>
+          </span>
+          <div>
+            <div class="whyTitle">مناظر قوية</div>
+            <div class="whyDesc">إطلالة تفتح النفس.</div>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- BOOKING -->
-      <section class="screen" id="booking" aria-label="التوافر والحجز">
-        <div class="panel">
-          <h2 class="panel-title">التوافر والحجز</h2>
-          <div class="panel-body placeholder"></div>
+    <!-- Guest Reviews -->
+    <section class="section" aria-label="آراء الضيوف">
+      <div class="sectionHead">
+        <h2>آراء الضيوف</h2>
+        <p>شهادة واحدة بتتغير تلقائيًا.</p>
+      </div>
+
+      <div class="review">
+        <div class="reviewQuote" id="reviewText">"إقامة ممتازة ومكان هادي جدًا."</div>
+        <div class="reviewBy" id="reviewBy">— Ahmed</div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <footer class="footer" id="contact" aria-label="تواصل">
+      <div class="footerCard">
+        <div class="footerTitle">تواصل معنا</div>
+        <div class="footerInfo">
+          <div>📞 Phone: (300) 689-2292</div>
+          <div>📍 Address: Main Avenue, Stunning Street</div>
         </div>
-      </section>
-    </main>
+
+        <div class="social">
+          <a class="soc" href="#!" aria-label="Instagram">IG</a>
+          <a class="soc" href="#!" aria-label="Facebook">FB</a>
+          <a class="soc" href="#!" aria-label="WhatsApp">WA</a>
+          <a class="soc" href="#!" aria-label="TikTok">TT</a>
+        </div>
+      </div>
+
+      <div class="footerNote">© Port Tawfiq Chalets</div>
+    </footer>
   </div>
 
   <script src="app.js"></script>
