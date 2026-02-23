@@ -6,30 +6,47 @@
   <meta name="theme-color" content="#050814" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
   <title>شاليها بورتوفيق</title>
 
-  <!-- خط رقعة -->
+  <!-- UI Font (Modern) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <!-- خلفية ألوان متغيّرة (بتغطي أي فراغات فوق/تحت) -->
+  <!-- متغيّرة + بتغطي أي فراغات -->
   <div class="ambient" aria-hidden="true"></div>
+
+  <!-- Particles -->
+  <canvas id="particles" aria-hidden="true"></canvas>
 
   <div class="app" id="app">
     <header class="topbar" aria-label="القائمة العلوية">
       <nav class="nav" role="tablist" aria-label="التنقل">
         <span class="nav-indicator" aria-hidden="true"></span>
 
-        <button class="nav-btn is-active" role="tab" aria-selected="true" data-target="home" type="button">الرئيسية</button>
-        <button class="nav-btn" role="tab" aria-selected="false" data-target="prices" type="button">الأسعار</button>
-        <button class="nav-btn" role="tab" aria-selected="false" data-target="stay" type="button">تفاصيل الإقامة</button>
-        <button class="nav-btn" role="tab" aria-selected="false" data-target="booking" type="button">التوافر والحجز</button>
+        <button class="nav-btn is-active" role="tab" aria-selected="true" data-target="home" type="button">
+          <span class="btn-ic" aria-hidden="true"></span>
+          <span class="btn-txt">الرئيسية</span>
+        </button>
+
+        <button class="nav-btn" role="tab" aria-selected="false" data-target="prices" type="button">
+          <span class="btn-ic" aria-hidden="true"></span>
+          <span class="btn-txt">الأسعار</span>
+        </button>
+
+        <button class="nav-btn" role="tab" aria-selected="false" data-target="stay" type="button">
+          <span class="btn-ic" aria-hidden="true"></span>
+          <span class="btn-txt">تفاصيل الإقامة</span>
+        </button>
+
+        <button class="nav-btn" role="tab" aria-selected="false" data-target="booking" type="button">
+          <span class="btn-ic" aria-hidden="true"></span>
+          <span class="btn-txt">التوافر والحجز</span>
+        </button>
       </nav>
     </header>
 
@@ -37,14 +54,10 @@
       <!-- HOME -->
       <section class="screen is-visible" id="home" aria-label="الرئيسية">
         <div class="hero">
-          <!-- فيديو: هيتحدد تلقائيًا من JS بأكتر من امتداد -->
           <video
             id="heroVideo"
             class="hero-video"
-            autoplay
-            muted
-            loop
-            playsinline
+            autoplay muted loop playsinline
             preload="metadata"
             data-asset="bck1"
           ></video>
@@ -52,14 +65,28 @@
           <div class="hero-overlay" aria-hidden="true"></div>
 
           <div class="hero-center">
-            <div class="glass-title">
-              <h1 class="hero-title" data-text="شاليها بورتوفيق">شاليها بورتوفيق</h1>
+            <div class="glass-title" aria-label="شاليها بورتوفيق">
+              <!-- SVG Stroke draw (writing effect) -->
+              <svg class="title-svg" viewBox="0 0 1200 260" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="2.2" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <text x="50%" y="60%" text-anchor="middle" class="t-stroke">شاليها بورتوفيق</text>
+                <text x="50%" y="60%" text-anchor="middle" class="t-fill" filter="url(#softGlow)">شاليها بورتوفيق</text>
+              </svg>
+
               <div class="title-shine" aria-hidden="true"></div>
             </div>
           </div>
 
           <div class="hero-footer" aria-label="شعار">
-            <!-- اللوجو: هيتحدد تلقائيًا من JS بأكتر من امتداد -->
             <img id="brandLogo" class="brand" data-asset="seuz" alt="seuz" />
           </div>
         </div>
