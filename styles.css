@@ -1,16 +1,13 @@
 :root{
   --bg0:#050814;
-  --bg1:#0a1233;
-
   --txt: rgba(255,255,255,.92);
   --muted: rgba(255,255,255,.72);
-  --stroke: rgba(255,255,255,.16);
 
   --glass: rgba(255,255,255,.10);
   --glass2: rgba(255,255,255,.06);
 
-  --shadow: 0 18px 60px rgba(0,0,0,.45);
   --radius: 18px;
+  --shadow: 0 18px 60px rgba(0,0,0,.45);
 
   --safeT: env(safe-area-inset-top);
   --safeB: env(safe-area-inset-bottom);
@@ -21,75 +18,144 @@
 *{ box-sizing:border-box; }
 html,body{ height:100%; margin:0; }
 body{
-  background: radial-gradient(1200px 700px at 50% 10%, rgba(80,140,255,.20), transparent 55%),
-              linear-gradient(180deg, var(--bg0), var(--bg1));
   color: var(--txt);
   font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  overflow:hidden; /* شاشة موبايل كاملة */
+  overflow:hidden;
+  -webkit-tap-highlight-color: transparent;
+  background: var(--bg0);
 }
 
+/* خلفية ألوان متغيّرة تغطي الشاشة كلها (حتى الفراغات) */
+.ambient{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events:none;
+  background:
+    radial-gradient(900px 520px at 12% 18%, rgba(120,90,255,.38), transparent 60%),
+    radial-gradient(760px 520px at 88% 22%, rgba(40,210,255,.32), transparent 62%),
+    radial-gradient(920px 700px at 50% 92%, rgba(255,120,200,.22), transparent 62%),
+    linear-gradient(180deg, #050814, #070a1a 55%, #0a1233);
+  filter: hue-rotate(0deg);
+  animation: hue 14s linear infinite;
+}
+
+.ambient::before{
+  content:"";
+  position:absolute;
+  inset:-25%;
+  background:
+    radial-gradient(420px 320px at 25% 30%, rgba(255,255,255,.07), transparent 60%),
+    radial-gradient(520px 420px at 75% 60%, rgba(255,255,255,.06), transparent 62%);
+  animation: drift 16s ease-in-out infinite alternate;
+  opacity:.9;
+}
+
+@keyframes hue{
+  to { filter: hue-rotate(360deg); }
+}
+@keyframes drift{
+  from { transform: translate3d(-2%, -1%, 0) scale(1.02); }
+  to   { transform: translate3d( 2%,  1%, 0) scale(1.06); }
+}
+
+/* Layout: Flex عشان ميبقاش فيه فراغات بسبب حسابات height */
 .app{
-  height: 100dvh;
-  width: 100%;
+  height: 100svh;      /* iOS stable viewport */
+  height: 100dvh;      /* modern dynamic viewport */
+  display:flex;
+  flex-direction:column;
+
   padding-top: calc(10px + var(--safeT));
   padding-bottom: calc(10px + var(--safeB));
   padding-left: calc(12px + var(--safeL));
   padding-right: calc(12px + var(--safeR));
 }
 
-/* Top bar */
-.topbar{
+.topbar{ flex: 0 0 auto; z-index: 50; }
+
+.main{
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 10px;
   position: relative;
-  z-index: 50;
 }
 
+/* Nav احترافي + Indicator */
 .nav{
+  position: relative;
   display:flex;
   gap: 10px;
-  justify-content: space-between;
   align-items:center;
+  justify-content: space-between;
+  direction: rtl;
 
   padding: 10px;
-  border-radius: calc(var(--radius) + 6px);
-  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-  border: 1px solid rgba(255,255,255,.14);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  border-radius: 22px;
+
+  background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.07));
+  border: 1px solid rgba(255,255,255,.16);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 34px rgba(0,0,0,.32);
+  overflow:hidden;
+}
+
+.nav::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius: inherit;
+  background: radial-gradient(900px 300px at 50% 0%, rgba(255,255,255,.20), transparent 55%);
+  pointer-events:none;
+  opacity:.55;
+}
+
+.nav-indicator{
+  position:absolute;
+  top: 10px;
+  bottom: 10px;
+  right: 10px;
+  width: 80px;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.10));
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow: 0 14px 34px rgba(0,0,0,.28);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transform: translateX(0);
+  transition: transform .22s ease, width .22s ease;
+  z-index: 0;
 }
 
 .nav-btn{
+  position: relative;
+  z-index: 1;
+
   flex: 1 1 auto;
   min-width: 0;
   border: 0;
-  color: var(--txt);
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 14px;
-  padding: 10px 10px;
+  border-radius: 16px;
+
+  padding: 11px 10px;
+  cursor:pointer;
+  background: rgba(0,0,0,.10);
+  color: rgba(255,255,255,.88);
+
   font-size: 14px;
   line-height: 1.1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  cursor:pointer;
 
-  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  transition: transform .14s ease, filter .14s ease;
 }
 
-.nav-btn:active{ transform: scale(.98); }
-.nav-btn.is-active{
-  background: rgba(255,255,255,.14);
-  border-color: rgba(255,255,255,.22);
-}
+.nav-btn:active{ transform: scale(.985); }
+.nav-btn.is-active{ filter: brightness(1.08); }
 
-/* Main screens */
-.main{
-  height: calc(100dvh - 76px - var(--safeT) - var(--safeB));
-  margin-top: 10px;
-  position: relative;
-}
-
+/* Screens */
 .screen{
   position:absolute;
   inset:0;
@@ -98,7 +164,6 @@ body{
   transform: translateY(10px);
   transition: opacity .22s ease, transform .22s ease;
 }
-
 .screen.is-visible{
   opacity:1;
   transform: translateY(0);
@@ -109,10 +174,11 @@ body{
 .hero{
   position: relative;
   height: 100%;
-  border-radius: calc(var(--radius) + 10px);
-  overflow: hidden;
-  box-shadow: var(--shadow);
+  border-radius: 26px;
+  overflow:hidden;
   border: 1px solid rgba(255,255,255,.12);
+  box-shadow: var(--shadow);
+  background: rgba(0,0,0,.18);
 }
 
 .hero-video{
@@ -128,10 +194,11 @@ body{
   position:absolute;
   inset:0;
   background:
-    radial-gradient(900px 500px at 50% 40%, rgba(0,0,0,.25), rgba(0,0,0,.55)),
-    linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.50));
+    radial-gradient(900px 520px at 50% 40%, rgba(0,0,0,.22), rgba(0,0,0,.56)),
+    linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.52));
 }
 
+/* Title */
 .hero-center{
   position:absolute;
   inset:0;
@@ -142,60 +209,62 @@ body{
 }
 
 .glass-title{
-  width: min(92vw, 520px);
-  padding: 16px 16px;
+  position: relative;
+  width: min(92vw, 560px);
+  padding: 18px 16px;
   border-radius: 22px;
 
   background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.07));
   border: 1px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 18px 70px rgba(0,0,0,.35);
-
-  transform: translateZ(0);
+  overflow:hidden;
 }
 
-.draw-title{
-  width:100%;
-  height:auto;
-  display:block;
+.title-shine{
+  position:absolute;
+  inset:-40%;
+  background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,.18), transparent 62%);
+  transform: translateX(55%) rotate(12deg);
+  animation: shine 3.2s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes shine{
+  0%,100% { transform: translateX(55%) rotate(12deg); opacity:.0; }
+  35%     { opacity:.55; }
+  60%     { transform: translateX(-55%) rotate(12deg); opacity:.0; }
 }
 
-.draw-title text{
+.hero-title{
+  margin:0;
+  text-align:center;
   font-family: "Aref Ruqaa", serif;
   font-weight: 700;
-  letter-spacing: 1px;
+  font-size: clamp(44px, 9vw, 84px);
+  line-height: 1.05;
+
+  /* ظل خفيف */
+  text-shadow: 0 14px 26px rgba(0,0,0,.36);
+
+  /* نسخة خافتة تحت الأنيميشن عشان ميبقاش فيه تداخل مزعج */
+  color: rgba(255,255,255,.14);
+  position: relative;
 }
 
-.t-stroke{
-  fill: transparent;
-  stroke: rgba(255,255,255,.92);
-  stroke-width: 2.2px;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  paint-order: stroke;
-
-  font-size: 92px;
-
-  stroke-dasharray: 1400;
-  stroke-dashoffset: 1400;
-  animation: draw 2.4s ease forwards;
+/* أنيميشن “كتابة” ثابت على iOS: كشف من اليمين للشمال */
+.hero-title::after{
+  content: attr(data-text);
+  position:absolute;
+  inset:0;
+  color: rgba(255,255,255,.92);
+  clip-path: inset(0 0 0 100%);
+  animation: revealRTL 2.1s ease forwards;
+  will-change: clip-path;
 }
 
-.t-fill{
-  fill: rgba(255,255,255,.92);
-  font-size: 92px;
-  opacity: 0;
-  animation: fillIn .55s ease forwards;
-  animation-delay: 2.05s;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-}
-
-@keyframes draw{
-  to { stroke-dashoffset: 0; }
-}
-@keyframes fillIn{
-  to { opacity: 1; }
+@keyframes revealRTL{
+  to { clip-path: inset(0 0 0 0); }
 }
 
 /* Bottom logo */
@@ -210,18 +279,18 @@ body{
 }
 
 .brand{
-  height: 46px;
-  width: auto;
-  opacity: .92;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,.45));
+  height: 50px;
+  width:auto;
+  opacity:.94;
+  filter: drop-shadow(0 12px 20px rgba(0,0,0,.45));
 }
 
-/* Other screens (blank placeholders for now) */
+/* Other screens */
 .panel{
   height: 100%;
-  border-radius: calc(var(--radius) + 10px);
+  border-radius: 26px;
   padding: 16px;
-  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
   border: 1px solid rgba(255,255,255,.12);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -241,10 +310,6 @@ body{
   background: rgba(255,255,255,.04);
 }
 
-.placeholder{}
-
-/* Better tap targets */
 @media (max-width: 380px){
-  .nav-btn{ font-size: 13px; padding: 10px 8px; }
-  .t-stroke, .t-fill{ font-size: 84px; }
+  .nav-btn{ font-size: 13px; padding: 11px 8px; }
 }
