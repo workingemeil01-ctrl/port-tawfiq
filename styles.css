@@ -1,13 +1,7 @@
 :root{
-  --bg0:#050814;
   --txt: rgba(255,255,255,.92);
-  --muted: rgba(255,255,255,.72);
-
-  --glass: rgba(255,255,255,.10);
-  --glass2: rgba(255,255,255,.06);
-
+  --muted: rgba(255,255,255,.70);
   --radius: 18px;
-  --shadow: 0 18px 60px rgba(0,0,0,.45);
 
   --safeT: env(safe-area-inset-top);
   --safeB: env(safe-area-inset-bottom);
@@ -17,19 +11,20 @@
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; margin:0; }
+
 body{
   color: var(--txt);
-  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  font-family: "Cairo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   overflow:hidden;
+  background: transparent; /* مهم: عشان الفراغات تبان من الخلفية المتغيّرة */
   -webkit-tap-highlight-color: transparent;
-  background: var(--bg0);
 }
 
-/* خلفية ألوان متغيّرة تغطي الشاشة كلها (حتى الفراغات) */
+/* خلفية متغيّرة تغطي كل الشاشة (حتى الفراغات) */
 .ambient{
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -3;
   pointer-events:none;
   background:
     radial-gradient(900px 520px at 12% 18%, rgba(120,90,255,.38), transparent 60%),
@@ -40,29 +35,22 @@ body{
   animation: hue 14s linear infinite;
 }
 
-.ambient::before{
-  content:"";
-  position:absolute;
-  inset:-25%;
-  background:
-    radial-gradient(420px 320px at 25% 30%, rgba(255,255,255,.07), transparent 60%),
-    radial-gradient(520px 420px at 75% 60%, rgba(255,255,255,.06), transparent 62%);
-  animation: drift 16s ease-in-out infinite alternate;
-  opacity:.9;
+@keyframes hue{ to { filter: hue-rotate(360deg); } }
+
+/* Particles canvas */
+#particles{
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
 }
 
-@keyframes hue{
-  to { filter: hue-rotate(360deg); }
-}
-@keyframes drift{
-  from { transform: translate3d(-2%, -1%, 0) scale(1.02); }
-  to   { transform: translate3d( 2%,  1%, 0) scale(1.06); }
-}
-
-/* Layout: Flex عشان ميبقاش فيه فراغات بسبب حسابات height */
+/* Layout: مفيش “لون ثابت” في الفراغات */
 .app{
-  height: 100svh;      /* iOS stable viewport */
-  height: 100dvh;      /* modern dynamic viewport */
+  height: 100svh;
+  height: 100dvh;
   display:flex;
   flex-direction:column;
 
@@ -70,6 +58,7 @@ body{
   padding-bottom: calc(10px + var(--safeB));
   padding-left: calc(12px + var(--safeL));
   padding-right: calc(12px + var(--safeR));
+  background: transparent;
 }
 
 .topbar{ flex: 0 0 auto; z-index: 50; }
@@ -81,50 +70,51 @@ body{
   position: relative;
 }
 
-/* Nav احترافي + Indicator */
+/* Nav مودرن */
 .nav{
   position: relative;
   display:flex;
   gap: 10px;
   align-items:center;
   justify-content: space-between;
-  direction: rtl;
 
   padding: 10px;
-  border-radius: 22px;
+  border-radius: 24px;
 
-  background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.07));
-  border: 1px solid rgba(255,255,255,.16);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 12px 34px rgba(0,0,0,.32);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 16px 40px rgba(0,0,0,.32);
   overflow:hidden;
 }
 
-.nav::after{
+.nav::before{
   content:"";
   position:absolute;
   inset:-2px;
   border-radius: inherit;
-  background: radial-gradient(900px 300px at 50% 0%, rgba(255,255,255,.20), transparent 55%);
-  pointer-events:none;
+  background: radial-gradient(900px 280px at 50% 0%, rgba(255,255,255,.18), transparent 55%);
   opacity:.55;
+  pointer-events:none;
 }
 
+/* Active indicator (pill) */
 .nav-indicator{
   position:absolute;
   top: 10px;
   bottom: 10px;
   right: 10px;
   width: 80px;
-  border-radius: 16px;
+  border-radius: 18px;
+
   background:
-    linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.10));
+    linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
   border: 1px solid rgba(255,255,255,.22);
-  box-shadow: 0 14px 34px rgba(0,0,0,.28);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  transform: translateX(0);
+  box-shadow: 0 16px 36px rgba(0,0,0,.30);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
   transition: transform .22s ease, width .22s ease;
   z-index: 0;
 }
@@ -132,28 +122,49 @@ body{
 .nav-btn{
   position: relative;
   z-index: 1;
-
   flex: 1 1 auto;
   min-width: 0;
-  border: 0;
-  border-radius: 16px;
 
+  border: 0;
+  background: transparent;
+  color: rgba(255,255,255,.86);
+
+  border-radius: 18px;
   padding: 11px 10px;
   cursor:pointer;
-  background: rgba(0,0,0,.10);
-  color: rgba(255,255,255,.88);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
 
   font-size: 14px;
-  line-height: 1.1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-weight: 700;
+  letter-spacing: .2px;
 
   transition: transform .14s ease, filter .14s ease;
 }
 
 .nav-btn:active{ transform: scale(.985); }
-.nav-btn.is-active{ filter: brightness(1.08); }
+
+.btn-ic{
+  width: 10px; height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.30);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.18) inset;
+  flex: 0 0 auto;
+}
+
+.nav-btn.is-active .btn-ic{
+  background: rgba(255,255,255,.70);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.30) inset, 0 0 18px rgba(255,255,255,.18);
+}
+
+.btn-txt{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /* Screens */
 .screen{
@@ -170,15 +181,15 @@ body{
   pointer-events:auto;
 }
 
-/* HOME hero */
+/* HOME */
 .hero{
   position: relative;
   height: 100%;
-  border-radius: 26px;
+  border-radius: 28px;
   overflow:hidden;
   border: 1px solid rgba(255,255,255,.12);
-  box-shadow: var(--shadow);
-  background: rgba(0,0,0,.18);
+  box-shadow: 0 18px 60px rgba(0,0,0,.45);
+  background: rgba(0,0,0,.10); /* شفاف عشان الخلفية تفضل موجودة */
 }
 
 .hero-video{
@@ -194,11 +205,11 @@ body{
   position:absolute;
   inset:0;
   background:
-    radial-gradient(900px 520px at 50% 40%, rgba(0,0,0,.22), rgba(0,0,0,.56)),
-    linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.52));
+    radial-gradient(900px 520px at 50% 40%, rgba(0,0,0,.18), rgba(0,0,0,.56)),
+    linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.52));
 }
 
-/* Title */
+/* Title box */
 .hero-center{
   position:absolute;
   inset:0;
@@ -210,25 +221,26 @@ body{
 
 .glass-title{
   position: relative;
-  width: min(92vw, 560px);
+  width: min(92vw, 600px);
   padding: 18px 16px;
-  border-radius: 22px;
+  border-radius: 24px;
 
-  background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.07));
+  background: rgba(255,255,255,.10);
   border: 1px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow: 0 18px 70px rgba(0,0,0,.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 70px rgba(0,0,0,.35);
   overflow:hidden;
 }
 
 .title-shine{
   position:absolute;
   inset:-40%;
-  background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,.18), transparent 62%);
+  background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,.16), transparent 62%);
   transform: translateX(55%) rotate(12deg);
   animation: shine 3.2s ease-in-out infinite;
   pointer-events:none;
+  opacity:.0;
 }
 @keyframes shine{
   0%,100% { transform: translateX(55%) rotate(12deg); opacity:.0; }
@@ -236,36 +248,41 @@ body{
   60%     { transform: translateX(-55%) rotate(12deg); opacity:.0; }
 }
 
-.hero-title{
-  margin:0;
-  text-align:center;
+/* SVG writing */
+.title-svg{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.title-svg text{
   font-family: "Aref Ruqaa", serif;
   font-weight: 700;
-  font-size: clamp(44px, 9vw, 84px);
-  line-height: 1.05;
-
-  /* ظل خفيف */
-  text-shadow: 0 14px 26px rgba(0,0,0,.36);
-
-  /* نسخة خافتة تحت الأنيميشن عشان ميبقاش فيه تداخل مزعج */
-  color: rgba(255,255,255,.14);
-  position: relative;
+  font-size: 100px;
+  dominant-baseline: middle;
 }
 
-/* أنيميشن “كتابة” ثابت على iOS: كشف من اليمين للشمال */
-.hero-title::after{
-  content: attr(data-text);
-  position:absolute;
-  inset:0;
-  color: rgba(255,255,255,.92);
-  clip-path: inset(0 0 0 100%);
-  animation: revealRTL 2.1s ease forwards;
-  will-change: clip-path;
+.t-stroke{
+  fill: transparent;
+  stroke: rgba(255,255,255,.92);
+  stroke-width: 2.4px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+
+  stroke-dasharray: 1600;
+  stroke-dashoffset: 1600;
+  animation: draw 2.6s ease forwards;
 }
 
-@keyframes revealRTL{
-  to { clip-path: inset(0 0 0 0); }
+.t-fill{
+  fill: rgba(255,255,255,.92);
+  opacity: 0;
+  animation: fillIn .55s ease forwards;
+  animation-delay: 2.2s;
 }
+
+@keyframes draw{ to { stroke-dashoffset: 0; } }
+@keyframes fillIn{ to { opacity: 1; } }
 
 /* Bottom logo */
 .hero-footer{
@@ -279,27 +296,28 @@ body{
 }
 
 .brand{
-  height: 50px;
+  height: 52px;
   width:auto;
-  opacity:.94;
-  filter: drop-shadow(0 12px 20px rgba(0,0,0,.45));
+  opacity:.95;
+  filter: drop-shadow(0 12px 22px rgba(0,0,0,.45));
 }
 
-/* Other screens */
+/* Other screens panels: شفافة أكتر عشان تبان الخلفية المتغيّرة */
 .panel{
   height: 100%;
-  border-radius: 26px;
+  border-radius: 28px;
   padding: 16px;
-  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+  background: rgba(255,255,255,.07);
   border: 1px solid rgba(255,255,255,.12);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 18px 60px rgba(0,0,0,.40);
 }
 
 .panel-title{
   margin: 2px 0 12px;
   font-size: 18px;
+  font-weight: 800;
   color: var(--txt);
 }
 
@@ -307,9 +325,11 @@ body{
   height: calc(100% - 46px);
   border-radius: 18px;
   border: 1px dashed rgba(255,255,255,.18);
-  background: rgba(255,255,255,.04);
+  background: rgba(255,255,255,.03);
 }
 
+/* Responsive tweaks */
 @media (max-width: 380px){
   .nav-btn{ font-size: 13px; padding: 11px 8px; }
+  .title-svg text{ font-size: 90px; }
 }
